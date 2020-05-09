@@ -12,8 +12,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import lombok.Setter;
+import lombok.SneakyThrows;
 
 import java.io.File;
+import java.net.URI;
 import java.util.Optional;
 
 public class MainWindowController {
@@ -167,8 +169,9 @@ public class MainWindowController {
     }
 
     @FXML
+    @SneakyThrows
     void showSourceCode(ActionEvent event) {
-
+        java.awt.Desktop.getDesktop().browse(new URI("https://github.com/kilev/compiler"));
     }
 
     @FXML
