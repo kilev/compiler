@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<Pane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.kil.view.controller.MainWindowController">
+    <children>
+        <VBox>
+            <children>
+                <MenuBar>
+                    <menus>
+                        <Menu mnemonicParsing="false" text="Файл">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#newProject" text="Создать"/>
+                                <MenuItem mnemonicParsing="false" onAction="#openProject" text="Открыть"/>
+                                <MenuItem mnemonicParsing="false" onAction="#saveProject" text="Сохранить"/>
+                                <MenuItem mnemonicParsing="false" onAction="#saveProjectAs" text="Сохранить как"/>
+                                <MenuItem mnemonicParsing="false" onAction="#exit" text="Выход"/>
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Правка">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#undo" text="Отменить"/>
+                                <MenuItem mnemonicParsing="false" onAction="#redo" text="Повторить"/>
+                                <MenuItem mnemonicParsing="false" onAction="#cut" text="Вырезать"/>
+                                <MenuItem mnemonicParsing="false" onAction="#copy" text="Копировать"/>
+                                <MenuItem mnemonicParsing="false" onAction="#paste" text="Вставить"/>
+                                <MenuItem mnemonicParsing="false" onAction="#delete" text="Удалить"/>
+                                <MenuItem mnemonicParsing="false" onAction="#selectAll" text="Выделить все"/>
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Текст">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#showTaskDescription"
+                                          text="Постановка задачи"/>
+                                <MenuItem mnemonicParsing="false" onAction="#showGrammar" text="Грамматика"/>
+                                <MenuItem mnemonicParsing="false" onAction="#showGrammarClassification"
+                                          text="Классификация Грамматики"/>
+                                <MenuItem mnemonicParsing="false" onAction="#showAnalyzeMethod" text="Метод анализа"/>
+                                <MenuItem mnemonicParsing="false" onAction="#showErrorDiagnosticAndFix"
+                                          text="Диагностика и нейтрализация ошибок"/>
+                                <MenuItem mnemonicParsing="false" onAction="#showExample" text="Тестовый пример"/>
+                                <MenuItem mnemonicParsing="false" onAction="#showLiteratureList"
+                                          text="Список литературы"/>
+                                <MenuItem mnemonicParsing="false" onAction="#showSourceCode"
+                                          text="Исходный код программы"/>
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Пуск">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#compile" text="скомпилировать"/>
+                                <MenuItem mnemonicParsing="false" onAction="#findCard" text="поиск карты"/>
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Справка">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#showReference" text="Вызов справки"/>
+                                <MenuItem mnemonicParsing="false" onAction="#showAboutApp" text="О программе"/>
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+                <HBox VBox.vgrow="ALWAYS">
+                    <children>
+                        <Button fx:id="buttonNew" mnemonicParsing="false" onAction="#newProject" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="buttonOpen" mnemonicParsing="false" onAction="#openProject" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="buttonSave" mnemonicParsing="false" onAction="#saveProject" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                            </HBox.margin>
+                        </Button>
+                        <Separator minWidth="150.0" HBox.hgrow="ALWAYS"/>
+                        <Button fx:id="buttonUndo" mnemonicParsing="false" onAction="#undo" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="buttonRedo" mnemonicParsing="false" onAction="#redo" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="buttonCut" mnemonicParsing="false" onAction="#cut" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="buttonCopy" mnemonicParsing="false" onAction="#copy" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="buttonPaste" mnemonicParsing="false" onAction="#paste" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                </HBox>
+                <SplitPane dividerPositions="0.5" orientation="VERTICAL">
+                    <items>
+                        <TextArea fx:id="codeArea"/>
+                        <TextArea fx:id="consoleArea" editable="false"/>
+                    </items>
+                </SplitPane>
+            </children>
+        </VBox>
+    </children>
+</Pane>
