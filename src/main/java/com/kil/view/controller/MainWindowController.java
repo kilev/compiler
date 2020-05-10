@@ -189,14 +189,14 @@ public class MainWindowController {
     }
 
     private void loadImages() {
-        setImage(buttonNew, "/image/png/edit-button-1.png");
-        setImage(buttonOpen, "/image/png/store-files.png");
-        setImage(buttonSave, "/image/png/save-files.png");
-        setImage(buttonUndo, "/image/png/undo-button.png");
-        setImage(buttonRedo, "/image/png/redo-button.png");
-        setImage(buttonCut, "/image/png/cutting-button.png");
-        setImage(buttonCopy, "/image/png/copy-text.png");
-        setImage(buttonPaste, "/image/png/paste-text.png");
+        setImage(buttonNew, "/image/edit-button.png");
+        setImage(buttonOpen, "/image/store-files.png");
+        setImage(buttonSave, "/image/save-files.png");
+        setImage(buttonUndo, "/image/undo-button.png");
+        setImage(buttonRedo, "/image/redo-button.png");
+        setImage(buttonCut, "/image/cutting-button.png");
+        setImage(buttonCopy, "/image/copy-text.png");
+        setImage(buttonPaste, "/image/paste-text.png");
 
         codeArea.setPromptText(CODE_PLACE_HOLDER_TEXT);
     }
