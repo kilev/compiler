@@ -1,4 +1,4 @@
-package com.kil.service.analyzer.card;
+package com.kil.service.search.card;
 
 import lombok.Data;
 

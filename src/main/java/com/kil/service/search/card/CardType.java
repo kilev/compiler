@@ -1,4 +1,4 @@
-package com.kil.service.analyzer.card;
+package com.kil.service.search.card;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,7 @@ public enum CardType {
     VISA("4"),
     MASTER_CARD("5"),
     WORLD("2"),
-    UNKNOWN(null);
+    UNKNOWN("");
 
     @Getter
     private final String startDigit;

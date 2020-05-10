@@ -3,6 +3,7 @@ package com.kil;
 import com.google.common.eventbus.EventBus;
 import com.kil.service.project.ProjectService;
 import com.kil.service.project.ProjectServiceImpl;
+import com.kil.service.search.SearchServiceImpl;
 import com.kil.view.DialogUtils;
 import com.kil.view.controller.MainWindowController;
 import javafx.application.Application;
@@ -29,6 +30,7 @@ public class App extends Application {
         DialogUtils.setPrimaryStage(stage);
         MainWindowController controller = loader.getController();
         controller.setProjectService(projectService);
+        controller.setSearchService(new SearchServiceImpl());
         controller.setPrimaryStage(stage);
         eventBus.register(controller);
 

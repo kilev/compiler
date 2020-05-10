@@ -3,6 +3,8 @@ package com.kil.view.controller;
 import com.google.common.eventbus.Subscribe;
 import com.kil.common.event.CodeChangedEvent;
 import com.kil.service.project.ProjectService;
+import com.kil.service.search.SearchService;
+import com.kil.service.search.card.CardSearchResult;
 import com.kil.view.DialogUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +18,9 @@ import lombok.SneakyThrows;
 
 import java.io.File;
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class MainWindowController {
 
@@ -29,6 +33,8 @@ public class MainWindowController {
 
     @Setter
     private ProjectService projectService;
+    @Setter
+    private SearchService searchService;
     @Setter
     private Stage primaryStage;
 
@@ -86,7 +92,12 @@ public class MainWindowController {
 
     @FXML
     void findCard(ActionEvent event) {
-
+        List<CardSearchResult> searchResult = searchService.searchCardsByRegex(codeArea.getText());
+        consoleArea.setText(
+                searchResult.stream()
+                        .map(CardSearchResult::toTextView)
+                        .collect(Collectors.joining(System.lineSeparator()))
+        );
     }
 
     @FXML
@@ -184,7 +195,10 @@ public class MainWindowController {
         loadImages();
 
         codeArea.textProperty().addListener(
-                (observable, oldValue, newValue) -> projectService.changeCode(newValue)
+                (observable, oldValue, newValue) -> {
+                    projectService.changeCode(newValue);
+                    findCard(null);
+                }
         );
     }
 
