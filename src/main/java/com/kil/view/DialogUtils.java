@@ -1,20 +1,21 @@
 package com.kil.view;
 
 import com.kil.common.command.Command;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.web.WebView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import lombok.Setter;
-import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
+import org.apache.commons.io.IOUtils;
 
 import java.io.File;
-import java.net.URL;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Optional;
 
 @UtilityClass
@@ -39,11 +40,9 @@ public class DialogUtils {
                 "Для сохранения проекта необходимо чтобы у него было имя.");
     }
 
-    @SneakyThrows
-    public void showReferenceDialog(String htmlPath) {
-        File file = new File(htmlPath);
-        URL url = file.toURI().toURL();
-        showWebViewDialog("Справка", null, url.toString());
+    public void showReferenceDialog(InputStream inputStream) {
+        String text = getTextFromInputStream(inputStream);
+        showWebViewDialog("Справка", null, text);
     }
 
     public void showConfirmationDialog(String title, String header, String text, Command afterYesCommand, Command afterNoCommand) {
@@ -83,6 +82,63 @@ public class DialogUtils {
         alert.showAndWait();
     }
 
+    public String getTextFromInputStream(InputStream inputStream) {
+        try {
+            StringWriter writer = new StringWriter();
+            IOUtils.copy(inputStream, writer, "UTF-8");
+            return writer.toString();
+        } catch (Exception e) {
+            DialogUtils.showException(e);
+            return null;
+        }
+    }
+
+    public void showWebViewDialog(String title, String text, String html) {
+        try {
+            Dialog dialog = new Dialog();
+            dialog.setTitle(title);
+            dialog.setContentText(text);
+            dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+
+            WebView webView = new WebView();
+            dialog.getDialogPane().setContent(webView);
+            webView.getEngine().loadContent(html);
+            dialog.showAndWait();
+        } catch (Exception e) {
+            DialogUtils.showException(e);
+        }
+    }
+
+    public void showException(Exception e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Exception Dialog");
+        alert.setHeaderText(e.toString());
+
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        e.printStackTrace(printWriter);
+        String exceptionText = stringWriter.toString();
+
+        Label label = new Label("The exception stacktrace was:");
+
+        TextArea textArea = new TextArea(exceptionText);
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+
+        textArea.setMaxWidth(Double.MAX_VALUE);
+        textArea.setMaxHeight(Double.MAX_VALUE);
+        GridPane.setVgrow(textArea, Priority.ALWAYS);
+        GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+        GridPane expContent = new GridPane();
+        expContent.setMaxWidth(Double.MAX_VALUE);
+        expContent.add(label, 0, 0);
+        expContent.add(textArea, 0, 1);
+
+        alert.getDialogPane().setExpandableContent(expContent);
+        alert.showAndWait();
+    }
+
     public Optional<File> chooseDirectory() {
         File file = new DirectoryChooser().showDialog(primaryStage);
         return Optional.ofNullable(file);
@@ -92,17 +148,4 @@ public class DialogUtils {
         File file = new FileChooser().showOpenDialog(primaryStage);
         return Optional.ofNullable(file);
     }
-
-    public void showWebViewDialog(String title, String text, String url) {
-        Dialog dialog = new Dialog();
-        dialog.setTitle(title);
-        dialog.setContentText(text);
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-
-        WebView webView = new WebView();
-        dialog.getDialogPane().setContent(webView);
-        webView.getEngine().load(url);
-        dialog.showAndWait();
-    }
-
 }

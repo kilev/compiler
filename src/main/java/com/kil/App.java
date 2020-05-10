@@ -1,8 +1,8 @@
 package com.kil;
 
 import com.google.common.eventbus.EventBus;
-import com.kil.service.ProjectService;
-import com.kil.service.ProjectServiceImpl;
+import com.kil.service.project.ProjectService;
+import com.kil.service.project.ProjectServiceImpl;
 import com.kil.view.DialogUtils;
 import com.kil.view.controller.MainWindowController;
 import javafx.application.Application;
