@@ -2,7 +2,7 @@ package com.kil.view.controller;
 
 import com.google.common.eventbus.Subscribe;
 import com.kil.common.event.CodeChangedEvent;
-import com.kil.service.ProjectService;
+import com.kil.service.project.ProjectService;
 import com.kil.view.DialogUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -165,7 +165,7 @@ public class MainWindowController {
 
     @FXML
     void showReference(ActionEvent event) {
-        DialogUtils.showReferenceDialog("src/main/resources/text/reference.html");
+        DialogUtils.showReferenceDialog(getClass().getResourceAsStream("/text/reference.html"));
     }
 
     @FXML

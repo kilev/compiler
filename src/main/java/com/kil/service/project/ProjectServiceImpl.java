@@ -1,11 +1,8 @@
-package com.kil.service;
+package com.kil.service.project;
 
 import com.google.common.eventbus.EventBus;
 import com.kil.common.command.Command;
 import com.kil.common.event.CodeChangedEvent;
-import com.kil.service.project.Project;
-import com.kil.service.project.ProjectCondition;
-import com.kil.service.project.ProjectSettings;
 import com.kil.service.project.provider.FileProjectProvider;
 import com.kil.service.project.provider.ProjectProvider;
 import com.kil.view.DialogUtils;
