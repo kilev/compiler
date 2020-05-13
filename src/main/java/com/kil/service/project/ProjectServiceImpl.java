@@ -85,6 +85,10 @@ public class ProjectServiceImpl implements ProjectService {
         project.getCondition().setEditable(true);
     }
 
+    public void checkToSave() {
+        checkToSaveBeforeAction(Command.EMPTY);
+    }
+
     private void checkToSaveBeforeAction(Command afterSaveCommand) {
         if (project.getCondition().isEditable()) {
             DialogUtils.askUserForSaveProject(

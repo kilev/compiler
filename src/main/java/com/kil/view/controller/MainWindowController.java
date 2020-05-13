@@ -13,6 +13,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 import lombok.Setter;
 import lombok.SneakyThrows;
 
@@ -87,7 +89,8 @@ public class MainWindowController {
 
     @FXML
     void exit(ActionEvent event) {
-        primaryStage.close();
+        Window window = primaryStage.getScene().getWindow();
+        window.fireEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
     @FXML

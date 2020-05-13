@@ -10,6 +10,8 @@ public interface ProjectService {
 
     void saveProjectAs(File directory, String name);
 
+    void checkToSave();
+
     void checkToSaveBeforeNewProject();
 
     void checkToSaveBeforeOpenProject();

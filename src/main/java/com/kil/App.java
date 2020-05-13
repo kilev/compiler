@@ -11,6 +11,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 import lombok.SneakyThrows;
 
 public class App extends Application {
@@ -33,6 +35,9 @@ public class App extends Application {
         controller.setSearchService(new SearchServiceImpl());
         controller.setPrimaryStage(stage);
         eventBus.register(controller);
+
+        Window window = stage.getScene().getWindow();
+        window.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, windowEvent -> projectService.checkToSave());
 
         stage.show();
     }

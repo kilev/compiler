@@ -32,6 +32,7 @@
                 <configuration>
                     <mainClass>com.kil.App</mainClass>
                     <vendor>Alex Kil</vendor>
+                    <allPermissions>true</allPermissions>
                 </configuration>
             </plugin>
         </plugins>

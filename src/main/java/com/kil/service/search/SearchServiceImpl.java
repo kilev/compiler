@@ -5,6 +5,7 @@ import com.kil.service.search.card.CardType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,6 +17,10 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public List<CardSearchResult> searchCardsByRegex(String text) {
+        if (text == null) {
+            return Collections.emptyList();
+        }
+
         List<CardSearchResult> results = new ArrayList<>();
         List<String> lines = Arrays.asList(text.split(SearchUtils.getLineSeparator()));
 
