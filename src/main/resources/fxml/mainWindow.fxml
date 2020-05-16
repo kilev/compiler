@@ -49,8 +49,11 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="Пуск">
                             <items>
+                                <MenuItem mnemonicParsing="false" onAction="#findCardByRegex"
+                                          text="поиск карты через regex"/>
+                                <MenuItem mnemonicParsing="false" onAction="#findCardByState"
+                                          text="поиск карты через состояния"/>
                                 <MenuItem mnemonicParsing="false" onAction="#compile" text="скомпилировать"/>
-                                <MenuItem mnemonicParsing="false" onAction="#findCard" text="поиск карты"/>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Справка">

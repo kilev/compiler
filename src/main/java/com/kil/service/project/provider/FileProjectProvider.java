@@ -1,8 +1,8 @@
 package com.kil.service.project.provider;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kil.service.project.Project;
-import com.kil.service.project.ProjectSettings;
+import com.kil.service.project.domain.Project;
+import com.kil.service.project.domain.ProjectSettings;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

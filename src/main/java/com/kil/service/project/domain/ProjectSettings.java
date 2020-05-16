@@ -1,4 +1,4 @@
-package com.kil.service.project;
+package com.kil.service.project.domain;
 
 import lombok.Data;
 
