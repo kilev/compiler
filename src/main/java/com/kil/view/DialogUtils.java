@@ -4,6 +4,7 @@ import com.kil.common.command.Command;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -40,9 +41,8 @@ public class DialogUtils {
                 "Для сохранения проекта необходимо чтобы у него было имя.");
     }
 
-    public void showReferenceDialog(InputStream inputStream) {
-        String text = getTextFromInputStream(inputStream);
-        showWebViewDialog("Справка", null, text);
+    public void showReferenceDialog(String contentPath) {
+        showWebViewDialog("Справка", null, contentPath);
     }
 
     public void showConfirmationDialog(String title, String header, String text, Command afterYesCommand, Command afterNoCommand) {
@@ -73,36 +73,18 @@ public class DialogUtils {
         return dialog.showAndWait();
     }
 
-    public void showInfoDialog(String title, String header, String text) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(text);
-
-        alert.showAndWait();
-    }
-
-    public String getTextFromInputStream(InputStream inputStream) {
-        try {
-            StringWriter writer = new StringWriter();
-            IOUtils.copy(inputStream, writer, "UTF-8");
-            return writer.toString();
-        } catch (Exception e) {
-            DialogUtils.showException(e);
-            return null;
-        }
-    }
-
-    public void showWebViewDialog(String title, String text, String html) {
+    public void showWebViewDialog(String title, String text, String contentPath) {
         try {
             Dialog dialog = new Dialog();
             dialog.setTitle(title);
             dialog.setContentText(text);
+            dialog.getDialogPane().setPrefWidth(Region.USE_COMPUTED_SIZE);
             dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
 
             WebView webView = new WebView();
             dialog.getDialogPane().setContent(webView);
-            webView.getEngine().loadContent(html);
+
+            webView.getEngine().load(DialogUtils.class.getResource(contentPath).toExternalForm());
             dialog.showAndWait();
         } catch (Exception e) {
             DialogUtils.showException(e);
@@ -147,5 +129,25 @@ public class DialogUtils {
     public Optional<File> chooseFile() {
         File file = new FileChooser().showOpenDialog(primaryStage);
         return Optional.ofNullable(file);
+    }
+
+    public void showInfoDialog(String title, String header, String text) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(text);
+
+        alert.showAndWait();
+    }
+
+    public String getTextFromInputStream(InputStream inputStream) {
+        try {
+            StringWriter writer = new StringWriter();
+            IOUtils.copy(inputStream, writer, "UTF-8");
+            return writer.toString();
+        } catch (Exception e) {
+            DialogUtils.showException(e);
+            return null;
+        }
     }
 }

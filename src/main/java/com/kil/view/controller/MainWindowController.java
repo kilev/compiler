@@ -184,7 +184,7 @@ public class MainWindowController {
 
     @FXML
     void showReference(ActionEvent event) {
-        DialogUtils.showReferenceDialog(getClass().getResourceAsStream("/text/reference.html"));
+        DialogUtils.showReferenceDialog("/reference/reference.html");
     }
 
     @FXML

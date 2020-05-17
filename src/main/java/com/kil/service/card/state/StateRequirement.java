@@ -11,6 +11,12 @@ public enum StateRequirement implements StateRequirementChecker {
             return character.equals(Utils.getLineSeparator());
         }
     },
+    NO_DIGIT {
+        @Override
+        public boolean check(Character character) {
+            return !Character.isDigit(character);
+        }
+    },
     DIGIT {
         @Override
         public boolean check(Character character) {

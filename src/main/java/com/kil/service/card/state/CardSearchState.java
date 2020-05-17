@@ -11,9 +11,7 @@ import java.util.List;
 public enum CardSearchState {
 
     Q21(),
-    Q20(
-            new NextState(StateRequirement.LINE_END, false, CardSearchState.Q21),
-            new NextState(StateRequirement.SPACE, false, CardSearchState.Q21)),
+    Q20(new NextState(StateRequirement.NO_DIGIT, false, CardSearchState.Q21)),
     Q19(new NextState(StateRequirement.DIGIT, true, CardSearchState.Q20)),
     Q18(new NextState(StateRequirement.DIGIT, true, CardSearchState.Q19)),
     Q17(new NextState(StateRequirement.DIGIT, true, CardSearchState.Q18)),
@@ -45,10 +43,7 @@ public enum CardSearchState {
     Q3(new NextState(StateRequirement.DIGIT, true, CardSearchState.Q4)),
     Q2(new NextState(StateRequirement.DIGIT, true, CardSearchState.Q3)),
     Q1(new NextState(StateRequirement.DIGIT, true, CardSearchState.Q2)),
-    Q0(
-            new NextState(StateRequirement.LINE_START, false, CardSearchState.Q1),
-            new NextState(StateRequirement.SPACE, false, CardSearchState.Q1)
-    );
+    Q0(new NextState(StateRequirement.NO_DIGIT, false, CardSearchState.Q1));
 
     public static final CardSearchState START_STATE = Q0;
     public static final CardSearchState FINISH_STATE = Q21;

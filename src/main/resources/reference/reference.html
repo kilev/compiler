@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title> Справка и помощь</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
 <body>
@@ -22,6 +22,7 @@
         <li><a href="#back">Отмена действия</a></li>
         <li><a href="#forward">Повтор действия</a></li>
         <li><a href="#regex">Регулярное выражение</a></li>
+        <li><a href="#State Machine">Конечнный автомат</a></li>
     </ol>
 </div>
 
@@ -61,6 +62,29 @@
 <h4>Возможные типы карт и символы с которых они начинаются:</h4>
 <p> VISA("4"), MASTER_CARD("5"), WORLD("2")</p>
 <p>Во всех остальных случаях - UNKNOWN</p>
+
+<h3 id="State Machine">Конечный автомат</h3>
+<h4>Граф:</h4>
+<figure>
+    <img src=image/graph.png>
+    <figcaption>Рис. 1 Граф</figcaption>
+</figure>
+<h3>Алфавит:</h3>
+<p>Не цифра<br>Цифра<br>-<br>Пробел<br>
+
+<h3>Перечень состояний:</h3>
+<p>
+    q0, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21.<br><br>
+    Начальное состояние: q0<br>
+    Конечное состояние: q21
+</p>
+<h3>Табличная функция переходов:</h3>
+<figure>
+    <img src="image/stateTable.png">
+    <figcaption>Рис. 2 Табличная функция переходов</figcaption>
+</figure>
+</body>
+</html>
 
 </body>
 </html>
