@@ -1,12 +1,11 @@
 package com.kil.service.match.entity;
 
-import com.kil.service.TextViewTransformable;
 import lombok.Data;
 
 import java.util.Arrays;
 
 @Data
-public class Card implements TextViewTransformable {
+public class Card {
 
     private String number;
     private CardType type;
@@ -18,7 +17,6 @@ public class Card implements TextViewTransformable {
                 .orElse(CardType.UNKNOWN);
     }
 
-    @Override
     public String toTextView() {
         return number + "(" + getCardType(number) + ")";
     }

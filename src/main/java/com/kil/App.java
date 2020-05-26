@@ -23,7 +23,6 @@ public class App extends Application {
         Parent mainWindow = loader.load();
         stage.setScene(new Scene(mainWindow));
         stage.setTitle("Compiler");
-        stage.setResizable(false);
 
         EventBus eventBus = new EventBus();
         ProjectService projectService = new ProjectServiceImpl(eventBus);
