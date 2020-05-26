@@ -1,4 +1,4 @@
-package com.kil.service.card.state;
+package com.kil.service.match;
 
 import com.kil.common.Utils;
 import lombok.Getter;

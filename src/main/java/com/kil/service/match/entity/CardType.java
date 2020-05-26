@@ -1,4 +1,4 @@
-package com.kil.service.card.entity;
+package com.kil.service.match.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

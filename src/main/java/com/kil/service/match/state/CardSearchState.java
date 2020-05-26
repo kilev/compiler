@@ -1,14 +1,14 @@
-package com.kil.service.card.state;
+package com.kil.service.match.state;
 
+import com.kil.service.match.StateRequirement;
 import jdk.jfr.DataAmount;
-import lombok.Data;
 import lombok.Getter;
 
 import java.util.Arrays;
 import java.util.List;
 
 @DataAmount
-public enum CardSearchState {
+public enum CardSearchState implements State {
 
     Q21(),
     Q20(new NextState(StateRequirement.NO_DIGIT, false, CardSearchState.Q21)),
@@ -57,10 +57,17 @@ public enum CardSearchState {
         this.nextStates = Arrays.asList(nextStates);
     }
 
-    @Data
-    public static class NextState {
-        private final StateRequirement requirement;
-        private final boolean appendCharacter;
-        private final CardSearchState state;
+    static State getStartState() {
+        return START_STATE;
+    }
+
+    @Override
+    public boolean isStartState() {
+        return this == START_STATE;
+    }
+
+    @Override
+    public boolean isFinishState() {
+        return this == FINISH_STATE;
     }
 }

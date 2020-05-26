@@ -2,10 +2,10 @@ package com.kil.view.controller;
 
 import com.google.common.eventbus.Subscribe;
 import com.kil.common.event.CodeChangedEvent;
-import com.kil.service.card.entity.Card;
-import com.kil.service.card.entity.StateSearchCardResult;
-import com.kil.service.card.regex.RegexSearchCardService;
-import com.kil.service.card.state.StateCardSearcherImpl;
+import com.kil.service.match.StateSearcher;
+import com.kil.service.match.entity.MatchResult;
+import com.kil.service.match.regex.RegexCardSearcher;
+import com.kil.service.match.state.CardSearchState;
 import com.kil.service.project.ProjectService;
 import com.kil.view.DialogUtils;
 import com.kil.view.FormatUtils;
@@ -23,7 +23,6 @@ import lombok.SneakyThrows;
 
 import java.io.File;
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
 public class MainWindowController {
@@ -37,9 +36,6 @@ public class MainWindowController {
 
     @Setter
     private ProjectService projectService;
-    @Setter
-    private RegexSearchCardService regexSearchCardService;
-
     @Setter
     private Stage primaryStage;
 
@@ -98,14 +94,14 @@ public class MainWindowController {
 
     @FXML
     void findCardByRegex(ActionEvent event) {
-        List<Card> searchedCards = regexSearchCardService.searchCards(codeArea.getText());
-        consoleArea.setText(FormatUtils.toTextView(searchedCards));
+        MatchResult matchResult = new RegexCardSearcher(codeArea.getText()).searchCards();
+        consoleArea.setText(FormatUtils.toTextView(matchResult));
     }
 
     @FXML
     void findCardByState(ActionEvent event) {
-        StateSearchCardResult searchResult = new StateCardSearcherImpl(codeArea.getText()).searchCards();
-        consoleArea.setText(FormatUtils.toTextView(searchResult));
+        MatchResult matchResult = new StateSearcher(codeArea.getText(), CardSearchState.START_STATE).search();
+        consoleArea.setText(FormatUtils.toTextView(matchResult));
     }
 
     @FXML

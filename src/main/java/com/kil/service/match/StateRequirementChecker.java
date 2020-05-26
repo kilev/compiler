@@ -1,4 +1,4 @@
-package com.kil.service.card.state;
+package com.kil.service.match;
 
 public interface StateRequirementChecker {
     /**
