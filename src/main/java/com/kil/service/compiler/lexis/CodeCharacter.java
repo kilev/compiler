@@ -1,4 +1,4 @@
-package com.kil.service.compiler.lexis.domain;
+package com.kil.service.compiler.lexis;
 
 import lombok.Data;
 

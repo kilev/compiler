@@ -3,7 +3,6 @@ package com.kil.service.compiler.lexis;
 import com.kil.service.compiler.entity.LexingResult;
 import com.kil.service.compiler.entity.Token;
 import com.kil.service.compiler.entity.TokenType;
-import com.kil.service.compiler.lexis.domain.CodeCharacter;
 
 import java.util.ArrayList;
 import java.util.Collections;

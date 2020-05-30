@@ -2,7 +2,6 @@ package com.kil.service.compiler.lexis;
 
 import com.google.common.collect.Lists;
 import com.kil.common.Utils;
-import com.kil.service.compiler.lexis.domain.CodeCharacter;
 import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;
