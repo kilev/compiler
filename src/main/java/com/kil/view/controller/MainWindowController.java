@@ -65,8 +65,8 @@ public class MainWindowController {
 
     @FXML
     void compile(ActionEvent event) {
-        LexingResult lexingResult = Lexer.analyze(codeArea.getText());
-        consoleArea.setText(lexingResult.toString().replace("\n", "\\n"));
+        LexingResult lexingResult = new Lexer().analyze(codeArea.getText());
+        consoleArea.setText(lexingResult.toString());
     }
 
     @FXML

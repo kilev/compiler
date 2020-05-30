@@ -1,67 +1,103 @@
 package com.kil.service.compiler.lexis;
 
-import com.google.common.collect.Lists;
-import com.kil.common.Utils;
 import com.kil.service.compiler.entity.LexingResult;
+import com.kil.service.compiler.entity.Token;
+import com.kil.service.compiler.entity.TokenType;
 import com.kil.service.compiler.lexis.domain.CodeCharacter;
-import com.kil.service.compiler.lexis.domain.Operator;
-import com.kil.service.compiler.lexis.state.IntegerState;
-import com.kil.service.compiler.lexis.state.LexingState;
-import com.kil.service.compiler.lexis.state.OperatorState;
-import com.kil.service.compiler.lexis.state.UnsupportedState;
-import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-@UtilityClass
 public class Lexer {
 
+    private static final String LEXER_ERROR_TEMPLATE = "Lexer error: ";
+    private static final String UNSUPPORTED_CHARACTER_ERROR_TEMPLATE = LEXER_ERROR_TEMPLATE + "unsupported character: ";
+
+    List<Token> tokens = new ArrayList<>();
+    List<String> errors = new ArrayList<>();
+    List<CodeCharacter> sequence = new ArrayList<>();
+
     public LexingResult analyze(String code) {
-        LexingState previousState = null;
-
-        for (CodeCharacter codeCharacter : getCodeCharacters(code)) {
-            LexingState state = chooseState(codeCharacter);
-            state.fillFromPrevious(previousState);
-            state.process(codeCharacter);
-            previousState = state;
+        List<CodeCharacter> codeCharacters = LexingUtils.getCodeCharacters(code);
+        for (CodeCharacter codeCharacter : codeCharacters) {
+            processCodeCharacter(codeCharacter);
         }
+        resolveTokenFromCurrentSequence();
 
-        if (previousState != null && !previousState.getCodeCharacterSequence().isEmpty()) {
-            previousState.handleSequence();
-        }
-
-        LexingResult result = new LexingResult();
-        result.setTokens(previousState == null ? new ArrayList<>() : previousState.getTokens());
-        result.setErrors(previousState == null ? new ArrayList<>() : previousState.getErrors());
-        return result;
+        tokens.removeIf(token -> token.getType() == TokenType.SPACE
+                || token.getType() == TokenType.NEW_LINE_SEPARATOR);
+        return new LexingResult(tokens, errors);
     }
 
-    private LexingState chooseState(CodeCharacter codeCharacter) {
-        if (Operator.allowCharacter(codeCharacter.getCharacter())) {
-            return new OperatorState();
-        } else if (Character.isDigit(codeCharacter.getCharacter())) {
-            return new IntegerState();
+    private void processCodeCharacter(CodeCharacter codeCharacter) {
+        //add error if found unsupported character
+        boolean supportedCharacter = Stream.of(TokenType.values())
+                .anyMatch(tokenType -> tokenType.supportCharacter(codeCharacter.getCharacter()));
+        if (!supportedCharacter) {
+            errors.add(UNSUPPORTED_CHARACTER_ERROR_TEMPLATE + codeCharacter.getCharacter());
+            resolveTokenFromCurrentSequence();
+            return;
         }
-        return new UnsupportedState();
+
+        String currentSequence = LexingUtils.getString(sequence, codeCharacter);
+
+        boolean hasEqualsStartSequence = Stream.of(TokenType.values())
+                .anyMatch(tokenType -> tokenType.startsWith(currentSequence));
+
+        if (!hasEqualsStartSequence) {
+            resolveTokenFromCurrentSequence();
+        }
+        sequence.add(codeCharacter);
     }
 
-    private List<CodeCharacter> getCodeCharacters(String code) {
-        List<CodeCharacter> codeCharacters = new ArrayList<>();
-
-        int line = 0;
-        int index = 0;
-        for (Character character : Lists.charactersOf(code)) {
-            CodeCharacter codeCharacter = new CodeCharacter(character, line, index);
-            codeCharacters.add(codeCharacter);
-
-            if (character.equals(Utils.getLineSeparator())) {
-                line++;
-                index = 0;
-            } else {
-                index++;
-            }
+    private void resolveTokenFromCurrentSequence() {
+        if (sequence.isEmpty()) {
+            return;
         }
-        return codeCharacters;
+
+        String sequenceValue = LexingUtils.getString(sequence);
+
+        Optional<TokenType> tokenType = Stream.of(TokenType.values())
+                .filter(type -> type.isTypeOf(sequenceValue))
+                .findFirst();
+
+        if (tokenType.isPresent()) {
+            Token newToken = getToken(sequence, tokenType.get());
+            tokens.add(newToken);
+        } else {
+            List<Token> newTokens = resolveDigitAndLetter(sequence);
+            tokens.addAll(newTokens);
+        }
+        sequence.clear();
     }
+
+    private List<Token> resolveDigitAndLetter(List<CodeCharacter> sequence) {
+        return sequence.stream()
+                .filter(codeCharacter -> TokenType.isDigitOrLetter(codeCharacter.getCharacter().toString()))
+                .map(singleCodeCharacter -> {
+                    TokenType type = null;
+                    String characterValue = singleCodeCharacter.getCharacter().toString();
+                    if (TokenType.DIGIT.isTypeOf(characterValue)) {
+                        type = TokenType.DIGIT;
+                    } else if (TokenType.LETTER.isTypeOf(characterValue)) {
+                        type = TokenType.LETTER;
+                    }
+                    return getToken(Collections.singletonList(singleCodeCharacter), type);
+                })
+                .collect(Collectors.toList());
+    }
+
+    private Token getToken(List<CodeCharacter> sequence, TokenType type) {
+        assert type != null && !sequence.isEmpty();
+
+        String value = LexingUtils.getString(sequence);
+        CodeCharacter firstCharacter = sequence.get(0);
+
+        return new Token(type, value, firstCharacter.getLine(), firstCharacter.getIndex());
+    }
+
 }

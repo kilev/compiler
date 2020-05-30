@@ -6,6 +6,6 @@ import java.util.List;
 
 @Data
 public class LexingResult {
-    private List<Token> tokens;
-    private List<String> errors;
+    private final List<Token> tokens;
+    private final List<String> errors;
 }
