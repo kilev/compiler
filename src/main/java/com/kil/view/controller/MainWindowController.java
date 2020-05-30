@@ -2,6 +2,8 @@ package com.kil.view.controller;
 
 import com.google.common.eventbus.Subscribe;
 import com.kil.common.event.CodeChangedEvent;
+import com.kil.service.compiler.entity.LexingResult;
+import com.kil.service.compiler.lexis.Lexer;
 import com.kil.service.match.StateSearcher;
 import com.kil.service.match.entity.MatchResult;
 import com.kil.service.match.regex.RegexCardSearcher;
@@ -63,7 +65,8 @@ public class MainWindowController {
 
     @FXML
     void compile(ActionEvent event) {
-
+        LexingResult lexingResult = Lexer.analyze(codeArea.getText());
+        consoleArea.setText(lexingResult.toString().replace("\n", "\\n"));
     }
 
     @FXML
